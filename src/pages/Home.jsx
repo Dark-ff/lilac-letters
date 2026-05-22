@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar"
-
+import { Link } from "react-router-dom"
 export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.15),transparent_40%)]">
@@ -18,9 +18,12 @@ export default function Home() {
     Create beautiful password-protected letters and share them privately with the people who matter.
   </p>
 
-  <button className="rounded-full border border-[#b8a2ff]/40 px-8 py-4 text-sm transition hover:bg-white hover:text-black">
-    Write a Letter
-  </button>
+  <Link
+  to="/create"
+  className="rounded-full border border-[#b8a2ff]/30 px-8 py-4 text-sm transition hover:bg-white hover:text-black"
+>
+  Write a Letter
+</Link>
 </section>
 <section className="border-t border-[#b8a2ff]/10 px-6 py-24">
   <div className="mx-auto max-w-5xl text-center">
@@ -71,6 +74,27 @@ export default function Home() {
       Send Feedback
     </button>
   </div>
+  <footer className="border-t border-[#b8a2ff]/10 px-6 py-16">
+  <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-8 text-center md:flex-row md:text-left">
+    
+    <div>
+      <h3 className="mb-3 text-2xl font-semibold">
+        Lilac Letters
+      </h3>
+
+      <p className="max-w-md text-[#d6ccff]">
+        A quiet space for words that deserve more than a notification bubble.
+      </p>
+    </div>
+
+    <div className="space-y-2 text-[#d6ccff]">
+      <p>Instagram</p>
+      <p>LinkedIn</p>
+      <p>Email</p>
+    </div>
+
+  </div>
+</footer>
 </section>
     </div>
   )
