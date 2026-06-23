@@ -1,4 +1,15 @@
+import { useState } from "react"
+
 export default function CreateLetter() {
+  const [theme, setTheme] = useState("Friendship")
+  const [style, setStyle] = useState("Moonlit")
+
+  const [title, setTitle] = useState("")
+  const [recipient, setRecipient] = useState("")
+  const [message, setMessage] = useState("")
+  const [memory, setMemory] = useState("")
+  const [hope, setHope] = useState("")
+  const [password, setPassword] = useState("")
   return (
     <div className="min-h-screen bg-black px-6 py-20 text-white">
       <div className="mx-auto max-w-7xl">
@@ -29,19 +40,47 @@ export default function CreateLetter() {
 
               <div className="mb-10 flex flex-wrap gap-4">
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+              <button
+                  onClick={() => setTheme("Birthday")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    theme === "Birthday"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Birthday
                 </button>
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setTheme("Friendship")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    theme === "Friendship"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Friendship
                 </button>
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setTheme("Farewell")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    theme === "Farewell"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Farewell
                 </button>
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setTheme("Confession")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    theme === "Confession"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Confession
                 </button>
 
@@ -53,19 +92,47 @@ export default function CreateLetter() {
 
               <div className="flex flex-wrap gap-4">
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setStyle("Old Paper")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    style === "Old Paper"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Old Paper
                 </button>
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setStyle("Dark Aesthetic")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    style === "Dark Aesthetic"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Dark Aesthetic
                 </button>
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setStyle("Moonlit")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    style === "Moonlit"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Moonlit
                 </button>
 
-                <button className="rounded-full border border-[#b8a2ff]/30 px-5 py-3 transition hover:bg-white hover:text-black">
+                <button
+                  onClick={() => setStyle("Minimal")}
+                  className={`rounded-full px-5 py-3 transition ${
+                    style === "Minimal"
+                      ? "bg-[#b8a2ff] text-black"
+                      : "border border-[#b8a2ff]/30 hover:bg-white hover:text-black"
+                  }`}
+                >
                   Minimal
                 </button>
 
@@ -79,6 +146,8 @@ export default function CreateLetter() {
 
             <input
               type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Letter title"
               className="w-full rounded-2xl border border-[#b8a2ff]/10 bg-white/5 p-5 outline-none placeholder:text-zinc-500"
             />
