@@ -1,10 +1,11 @@
 import LetterPreview from "../components/LetterPreview"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function CreateLetter() {
   const [theme, setTheme] = useState("Friendship")
   const [style, setStyle] = useState("Moonlit")
-
+  const navigate = useNavigate()
   const [title, setTitle] = useState("")
   const [recipient, setRecipient] = useState("")
   const [message, setMessage] = useState("")
@@ -31,7 +32,11 @@ export default function CreateLetter() {
       JSON.stringify(letter)
     )
 
-    alert(`Letter saved!\nID: ${letter.id}`)
+    const link = `${window.location.origin}/letter/${letter.id}`
+
+    navigator.clipboard.writeText(link)
+
+    alert(`Link copied!\n\n${link}`)
   }
   return (
     <div className="min-h-screen bg-black px-6 py-20 text-white">

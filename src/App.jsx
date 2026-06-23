@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-
+import MyLetters from "./pages/MyLetters"
 import Home from "./pages/Home"
 import CreateLetter from "./pages/CreateLetter"
 import ReadLetter from "./pages/ReadLetter"
@@ -11,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create" element={<CreateLetter />} />
+        <Route path="/my-letters" element={<MyLetters />} />
         <Route path="/letter" element={<ReadLetter />} />
 
         <Route

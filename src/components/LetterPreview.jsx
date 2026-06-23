@@ -32,7 +32,7 @@ export default function LetterPreview({
   }
 
   const current = styles[style] || styles.Moonlit
-
+  
   return (
     <div
       className="rounded-3xl border p-10 transition-all duration-300"

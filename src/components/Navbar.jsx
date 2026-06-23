@@ -3,7 +3,7 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between px-8 py-6 border-b border-[#b8a2ff]/10 bg-black text-white">
       <h1 className="text-xl font-semibold tracking-wide">
-        Lilac Letters
+        Lunareth Letters
       </h1>
 
       <Link
