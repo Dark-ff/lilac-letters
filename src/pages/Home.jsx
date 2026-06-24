@@ -30,10 +30,10 @@ export default function Home() {
           </Link>
 
           <Link
-            to="/letter"
+            to="/my-letters"
             className="rounded-full border border-[#A594E0]/30 px-8 py-4 text-[#E8E4F4] transition hover:border-[#A594E0]"
           >
-            Open a Letter
+            My Letters
           </Link>
         </div>
       </section>

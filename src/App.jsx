@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import MyLetters from "./pages/MyLetters"
 import Home from "./pages/Home"
 import CreateLetter from "./pages/CreateLetter"
-import ReadLetter from "./pages/ReadLetter"
 import ViewLetter from "./pages/ViewLetter"
 
 export default function App() {
@@ -12,12 +11,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/create" element={<CreateLetter />} />
         <Route path="/my-letters" element={<MyLetters />} />
-        <Route path="/letter" element={<ReadLetter />} />
-
-        <Route
-          path="/letter/:id"
-          element={<ViewLetter />}
-        />
+        <Route path="/letter/:id" element={<ViewLetter />} />
       </Routes>
     </BrowserRouter>
   )

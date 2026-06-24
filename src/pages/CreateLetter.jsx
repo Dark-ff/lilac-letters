@@ -1,4 +1,5 @@
 import LetterPreview from "../components/LetterPreview"
+import Navbar from "../components/Navbar"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -38,8 +39,10 @@ export default function CreateLetter() {
 
     alert(`Link copied!\n\n${link}`)
   }
-  return (
-    <div className="min-h-screen bg-black px-6 py-20 text-white">
+ return (
+ <>
+    <Navbar />
+    <div className="min-h-screen bg-black px-6 pt-24 text-white">
       <div className="mx-auto max-w-7xl">
 
         <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#b8a2ff]">
@@ -253,5 +256,6 @@ export default function CreateLetter() {
 
       </div>
     </div>
+  </>
   )
 }

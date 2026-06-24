@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-
+import Navbar from "../components/Navbar"
 export default function MyLetters() {
   const letters = []
 
@@ -19,10 +19,12 @@ export default function MyLetters() {
   )
 
   return (
-    <div className="min-h-screen bg-black text-white p-10">
-      <h1 className="text-4xl font-bold mb-8">
-        My Letters
-      </h1>
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-black text-white p-10">
+        <h1 className="text-4xl font-bold mb-8">
+          My Letters
+        </h1>
 
       {letters.length === 0 && (
         <p className="text-zinc-500">
@@ -71,6 +73,7 @@ export default function MyLetters() {
           </div>
         ))}
       </div>
-    </div>
+      </div>
+    </>
   )
 }
