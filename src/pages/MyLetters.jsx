@@ -15,16 +15,43 @@ function Badge({ children }) {
 export default function MyLetters() {
   const [letters, setLetters] = useState(() => getSavedLetters())
   const [letterToDelete, setLetterToDelete] = useState(null)
+  const [deletePassword, setDeletePassword] = useState("")
+  const [deleteError, setDeleteError] = useState("")
 
-  const confirmDelete = () => {
+  const closeDeleteDialog = () => {
+    setLetterToDelete(null)
+    setDeletePassword("")
+    setDeleteError("")
+  }
+
+  const requestDelete = (letter) => {
+    setLetterToDelete(letter)
+    setDeletePassword("")
+    setDeleteError("")
+  }
+
+  const deleteSelectedLetter = () => {
     if (!letterToDelete) return
 
     deleteLetter(letterToDelete.id)
     setLetters((currentLetters) =>
       currentLetters.filter((letter) => letter.id !== letterToDelete.id)
     )
-    setLetterToDelete(null)
+    closeDeleteDialog()
   }
+
+  const confirmDelete = () => {
+    if (!letterToDelete) return
+
+    if (letterToDelete.password && deletePassword !== letterToDelete.password) {
+      setDeleteError("That password does not match this letter.")
+      return
+    }
+
+    deleteSelectedLetter()
+  }
+
+  const isPasswordProtectedDelete = Boolean(letterToDelete?.password)
 
   return (
     <>
@@ -110,7 +137,7 @@ export default function MyLetters() {
 
                     <button
                       type="button"
-                      onClick={() => setLetterToDelete(letter)}
+                      onClick={() => requestDelete(letter)}
                       className="rounded-full border border-red-400/50 px-5 py-2 text-sm text-red-200 transition hover:bg-red-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-red-300/50"
                     >
                       Delete
@@ -127,17 +154,43 @@ export default function MyLetters() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-6">
           <div className="w-full max-w-md rounded-3xl border border-[#b8a2ff]/10 bg-[#09090f] p-7 text-white shadow-2xl">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#b8a2ff]">
-              Confirm Delete
+              {isPasswordProtectedDelete ? "Password Required" : "Confirm Delete"}
             </p>
             <h2 className="mb-3 text-2xl font-semibold">Delete this letter?</h2>
             <p className="mb-6 text-[#d6ccff]">
-              This will remove "{letterToDelete.title || "Untitled Letter"}" from this browser.
+              {isPasswordProtectedDelete
+                ? `Enter the password for "${letterToDelete.title || "Untitled Letter"}" to delete it from this browser.`
+                : `This will remove "${letterToDelete.title || "Untitled Letter"}" from this browser.`}
             </p>
+
+            {isPasswordProtectedDelete && (
+              <div className="mb-6">
+                <input
+                  type="password"
+                  value={deletePassword}
+                  onChange={(e) => {
+                    setDeletePassword(e.target.value)
+                    setDeleteError("")
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      confirmDelete()
+                    }
+                  }}
+                  placeholder="Letter password"
+                  aria-invalid={Boolean(deleteError)}
+                  className={`w-full rounded-2xl border bg-white/5 p-4 outline-none transition placeholder:text-zinc-500 focus:border-[#b8a2ff]/50 ${
+                    deleteError ? "border-red-400/70" : "border-[#b8a2ff]/10"
+                  }`}
+                />
+                {deleteError && <p className="mt-2 text-sm text-red-300">{deleteError}</p>}
+              </div>
+            )}
 
             <div className="flex flex-wrap justify-end gap-3">
               <button
                 type="button"
-                onClick={() => setLetterToDelete(null)}
+                onClick={closeDeleteDialog}
                 className="rounded-full border border-[#b8a2ff]/30 px-5 py-2 text-sm transition hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-[#b8a2ff]/50"
               >
                 Cancel
@@ -156,4 +209,3 @@ export default function MyLetters() {
     </>
   )
 }
-
