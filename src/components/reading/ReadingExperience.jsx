@@ -63,6 +63,8 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
   const [paperPhase, setPaperPhase] = useState("hidden")
   const [passwordError, setPasswordError] = useState("")
   const [isShaking, setIsShaking] = useState(false)
+  const [animationsSkipped, setAnimationsSkipped] = useState(false)
+  const [hasVerifiedPassword, setHasVerifiedPassword] = useState(!isProtected)
   const verifyTimeoutRef = useRef(null)
   const sequenceTimeoutRef = useRef(null)
 
@@ -94,11 +96,21 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     }
     setPasswordError("")
     setIsShaking(false)
+    setPaperPhase("hidden")
+
+    if (isProtected && !hasVerifiedPassword) {
+      setAnimationsSkipped(true)
+      setSealState(SEAL_STATE.GLOW_LILAC)
+      setState(READING_STATE.PASSWORD)
+      setExperiencePhase(EXPERIENCE_PHASE.ENVELOPE)
+      return
+    }
+
     setSealState(SEAL_STATE.BROKEN)
     setPaperPhase("complete")
     setState(READING_STATE.SKIPPED)
     setExperiencePhase(EXPERIENCE_PHASE.READING)
-  }, [clearSequenceTimeout])
+  }, [clearSequenceTimeout, hasVerifiedPassword, isProtected])
 
   const startRevealSequence = useCallback(() => {
     setState(READING_STATE.REVEALING)
@@ -185,6 +197,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     if (state === READING_STATE.VERIFYING) return
 
     setPasswordError("")
+    setAnimationsSkipped(false)
     setSealState(SEAL_STATE.IDLE)
     setState(READING_STATE.SEALED)
   }, [state])
@@ -214,11 +227,19 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
           return
         }
 
+        setHasVerifiedPassword(true)
+
+        if (animationsSkipped) {
+          setState(READING_STATE.READING)
+          setExperiencePhase(EXPERIENCE_PHASE.READING)
+          return
+        }
+
         setSealState(SEAL_STATE.GLOW_LILAC)
         setTimeout(() => setSealState(SEAL_STATE.BREAKING), timing.break)
       }, timing.verify)
     },
-    [letter.password, state, timing.break, timing.shake, timing.verify]
+    [animationsSkipped, letter.password, state, timing.break, timing.shake, timing.verify]
   )
 
   useEffect(() => {
@@ -256,7 +277,8 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
   const showSkip =
     experiencePhase === EXPERIENCE_PHASE.ENVELOPE &&
     canSkipAnimation(state) &&
-    state !== READING_STATE.ARRIVING
+    state !== READING_STATE.ARRIVING &&
+    !(isProtected && (state === READING_STATE.PASSWORD || state === READING_STATE.VERIFYING))
 
   const showEnvelopeStage =
     experiencePhase === EXPERIENCE_PHASE.ENVELOPE && !isReadingComplete(state)
@@ -283,7 +305,7 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
         <ThemeIntro onComplete={beginEnvelopeExperience} onSkip={skipToReading} />
       )}
 
-      {isReadingComplete(state) && (
+      {isReadingComplete(state) && hasVerifiedPassword && (
         <div className="relative z-10 w-full" style={{ maxWidth: "680px" }}>
           <div style={readingContainerStyle}>
             <LetterRenderer
