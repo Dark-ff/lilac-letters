@@ -1,9 +1,12 @@
+import StarField from "../components/background/StarField"
 import Navbar from "../components/Navbar"
 import { Link } from "react-router-dom"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#05060D] text-[#E8E4F4]">
+    <div className="relative min-h-screen bg-[#05060D] text-[#E8E4F4]">
+      <StarField />
+      <div className="relative z-10">
       <Navbar />
 
       <section className="flex flex-col items-center justify-center px-6 py-40 text-center">
@@ -114,6 +117,7 @@ export default function Home() {
           </div>
         </footer>
       </section>
+      </div>
     </div>
   )
 }
