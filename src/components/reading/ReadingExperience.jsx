@@ -151,14 +151,12 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
     if (state !== READING_STATE.ARRIVING) return
 
     queueSequence(() => setState(READING_STATE.SEALED), timing.arrive)
-    return clearSequenceTimeout
   }, [clearSequenceTimeout, experiencePhase, queueSequence, state, timing.arrive])
 
   useEffect(() => {
     if (sealState !== SEAL_STATE.SPARKLE) return
 
     queueSequence(() => setSealState(SEAL_STATE.BREAKING), timing.sparkle)
-    return clearSequenceTimeout
   }, [clearSequenceTimeout, queueSequence, sealState, timing.sparkle])
 
   useEffect(() => {
@@ -168,7 +166,6 @@ export default function ReadingExperience({ letter, themeIntro: ThemeIntro }) {
       setSealState(SEAL_STATE.BROKEN)
       beginOpening()
     }, timing.break)
-    return clearSequenceTimeout
   }, [beginOpening, clearSequenceTimeout, queueSequence, sealState, timing.break])
 
   useEffect(() => {
